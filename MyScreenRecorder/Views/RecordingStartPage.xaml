@@ -1,0 +1,50 @@
+﻿<Page
+    x:Class="MyScreenRecorder.Views.RecordingStartPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MyScreenRecorder"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:behaviors="using:MyScreenRecorder.Components.Behaviors"
+    xmlns:viewModels="using:MyScreenRecorder.ViewModels"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Width="500" Height="300" ManipulationMode="None">
+
+    <interactivity:Interaction.Behaviors>
+        <behaviors:FixedWindowSizeBehavior WindowWidth="500" WindowHeight="300" Title="My Screen Recorder"/>
+    </interactivity:Interaction.Behaviors>
+    
+    <Page.DataContext>
+        <viewModels:RecordingStartPageViewModel x:Name="ViewModel" />
+    </Page.DataContext>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="500"/>
+        </Grid.ColumnDefinitions>
+        
+        <controls:DockPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center">
+            <RadioButton GroupName="RecordSubject" Content="Full screen"/>
+            <RadioButton GroupName="RecordSubject" Content="Window" IsEnabled="False"/>
+            <RadioButton GroupName="RecordSubject" Content="Area" IsEnabled="False"/>
+        </controls:DockPanel>
+        
+        <controls:DockPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center">
+            <CheckBox IsChecked="False" Content="Microphone" IsEnabled="False"/>
+            <CheckBox IsChecked="False" Content="Speaker" IsEnabled="False"/>
+        </controls:DockPanel>
+        
+        <controls:DockPanel Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center">
+            <Button Content="Record" Command="{Binding  StartRecordingCommand}"/>
+            <Button Content="Stop" Command="{Binding  StopRecordingCommand}"/>
+        </controls:DockPanel>
+    </Grid>
+</Page>
