@@ -9,39 +9,26 @@ namespace MyScreenRecorder.Commands
     public class RelayCommand : ICommand
     {
         private readonly Action<object> execute;
-        private readonly Func<bool> canExecute;
+        private readonly Func<bool>? canExecute;
 
-        public RelayCommand(Action<object> execute, Func<bool> canExecute = null)
+        public RelayCommand(Action<object> execute, Func<bool>? canExecute = null)
         {
             this.execute = execute ?? throw new ArgumentNullException(nameof(execute));
             this.canExecute = canExecute;
         }
 
-        public event EventHandler CanExecuteChanged;
+        public bool CanExecute(object? parameter) => canExecute?.Invoke() ?? true;
 
-        public bool CanExecute(object parameter) => canExecute?.Invoke() ?? true;
-
-        public void Execute(object parameter)
+        public void Execute(object? parameter)
         {
-            execute.Invoke(parameter);
+            execute.Invoke(parameter!);
         } 
-
+        
+        public event EventHandler? CanExecuteChanged;
+        
         private void OnCanExecuteChanged()
-        {var dispatcher = Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher;
-            if (dispatcher != null)
-            {
-                if (dispatcher.HasThreadAccess)
-                {
-                    CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-                }
-                else
-                {
-                    dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                    {
-                        CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-                    }).AsTask().Wait();
-                }
-            }
+        {
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public void RaiseCanExecuteChanged() => OnCanExecuteChanged();
