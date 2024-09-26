@@ -33,6 +33,11 @@ namespace MyScreenRecorder.Components.Behaviors
 
             ViewSize = new Size(WindowWidth, WindowHeight);
             await SetWindowSizeAsync(ViewSize);
+            CoreWindow.GetForCurrentThread().Activated += ResizeView;
+            CoreWindow.GetForCurrentThread().Closed += delegate
+            {
+                CoreWindow.GetForCurrentThread().Activated -= ResizeView;
+            };
             ApplicationView.GetForCurrentView().Consolidated += delegate
             {
                 Window.Current.CoreWindow.SizeChanged -= ResizeView;
@@ -42,6 +47,11 @@ namespace MyScreenRecorder.Components.Behaviors
         }
 
         private void ResizeView(CoreWindow window, WindowSizeChangedEventArgs args)
+        {
+            ApplicationView.GetForCurrentView().TryResizeView(ViewSize);
+        }
+        
+        private void ResizeView(CoreWindow window, WindowActivatedEventArgs args)
         {
             ApplicationView.GetForCurrentView().TryResizeView(ViewSize);
         }
