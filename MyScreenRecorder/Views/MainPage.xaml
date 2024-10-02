@@ -10,10 +10,10 @@
     xmlns:behaviors="using:MyScreenRecorder.Components.Behaviors"
     xmlns:viewModels="using:MyScreenRecorder.ViewModels"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Width="500" Height="300" ManipulationMode="None">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Width="500" Height="360" ManipulationMode="None">
 
     <interactivity:Interaction.Behaviors>
-        <behaviors:FixedWindowSizeBehavior WindowWidth="500" WindowHeight="300" Title="My Screen Recorder"/>
+        <behaviors:FixedWindowSizeBehavior WindowWidth="500" WindowHeight="360" Title="My Screen Recorder"/>
     </interactivity:Interaction.Behaviors>
     
     <Page.DataContext>
@@ -25,6 +25,7 @@
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
             <RowDefinition Height="100"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         
         <Grid.ColumnDefinitions>
@@ -44,6 +45,13 @@
         
         <controls:DockPanel Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center">
             <Button Content="Record" Command="{Binding  StartRecordingCommand}"/>
+        </controls:DockPanel>
+        
+        <controls:DockPanel Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center">
+            <Button controls:DockPanel.Dock="Left" 
+                    Command="{Binding  OpenRecordsWindowAsyncCommand}">
+                <Image Source="/Assets/Folder_icon.png" Width="10" Height="10"/>
+            </Button>
         </controls:DockPanel>
     </Grid>
 </Page>

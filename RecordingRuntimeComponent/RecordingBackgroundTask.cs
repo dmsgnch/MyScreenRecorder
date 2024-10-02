@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.IO.Pipes;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
 using Windows.Storage;
@@ -20,9 +21,13 @@ public sealed class RecordingBackgroundTask : IBackgroundTask
         if (cost == BackgroundWorkCostValue.High)
             return;
         
+        var cancellationTokenSource = new CancellationTokenSource();
+        
         taskInstance.Canceled += (s, e) =>
         {
             cancelRequested = true;
+            cancellationTokenSource.Cancel();
+            cancellationTokenSource.Dispose();
         };
 
         try

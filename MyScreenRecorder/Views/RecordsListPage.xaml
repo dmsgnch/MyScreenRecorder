@@ -1,0 +1,83 @@
+﻿<Page
+    x:Class="MyScreenRecorder.Views.RecordsListPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MyScreenRecorder"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:viewModels="using:MyScreenRecorder.ViewModels"
+    xmlns:winUi="using:CommunityToolkit.WinUI"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    IsHoldingEnabled="False"
+    ManipulationMode="None">
+
+    <Page.DataContext>
+        <viewModels:RecordsListPageViewModel x:Name="ViewModel" />
+    </Page.DataContext>
+
+    <Grid>
+        <ScrollViewer>
+            <StackPanel Spacing="10">
+                <Button Margin="10 0 0 0" Content="Update" Command="{Binding UpdateRecordListCommand}"/>
+                <ListBox ItemsSource="{Binding Records}" HorizontalContentAlignment="Stretch">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <controls:DockPanel Margin="10">
+                                <Image controls:DockPanel.Dock="Left"
+                                       Width="100" Height="75"
+                                       Source="{Binding Path=PreviewImage}" />
+
+                                <StackPanel
+                                    Margin="10 0 0 0" controls:DockPanel.Dock="Left" Orientation="Vertical"
+                                    VerticalAlignment="Center" Spacing="10">
+
+                                    <TextBlock FontSize="12" Text="{Binding Path=FileName, Mode=OneWay}"
+                                               HorizontalAlignment="Left" />
+                                    <TextBlock FontSize="12" Text="{Binding Path=CreationData, Mode=OneWay}"
+                                               HorizontalAlignment="Left" />
+                                </StackPanel>
+
+                                <StackPanel controls:DockPanel.Dock="Right"
+                                            Orientation="Horizontal"
+                                            Spacing="10"
+                                            HorizontalAlignment="Right"
+                                            Margin="0 0 10 0">
+                                    <Button winUi:FrameworkElementExtensions.AncestorType="ListBox"
+                                            Command="{Binding (winUi:FrameworkElementExtensions.Ancestor).DataContext.PlayRecordAsyncCommand, 
+                                                            RelativeSource={RelativeSource Self}}"
+                                            CommandParameter="{Binding FileName}">
+                                        <Image Source="/Assets/Play_icon.png" Width="10" Height="15" />
+                                    </Button>
+                                    <Button winUi:FrameworkElementExtensions.AncestorType="ListBox"
+                                            Command="{Binding (winUi:FrameworkElementExtensions.Ancestor).DataContext.OpenRecordFolderAsyncCommand, 
+                                                            RelativeSource={RelativeSource Self}}">
+                                        <Image Source="/Assets/Folder_icon.png" Width="10" Height="15" />
+                                    </Button>
+                                    <Button winUi:FrameworkElementExtensions.AncestorType="ListBox"
+                                            Command="{Binding (winUi:FrameworkElementExtensions.Ancestor).DataContext.RenameRecordAsyncCommand, 
+                                                            RelativeSource={RelativeSource Self}}"
+                                            CommandParameter="{Binding}">
+                                        <Image Source="/Assets/Edit_icon.png" Width="10" Height="15" />
+                                    </Button>
+                                    <Button winUi:FrameworkElementExtensions.AncestorType="ListBox"
+                                            Command="{Binding (winUi:FrameworkElementExtensions.Ancestor).DataContext.DeleteRecordAsyncCommand, 
+                                                            RelativeSource={RelativeSource Self}}"
+                                            CommandParameter="{Binding FileName}">
+                                        <Image Source="/Assets/Trash_icon.png" Width="10" Height="15" />
+                                    </Button>
+                                </StackPanel>
+                            </controls:DockPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>
