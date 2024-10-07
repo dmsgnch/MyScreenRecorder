@@ -1,14 +1,12 @@
 ﻿using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.ApplicationModel.AppService;
-using Windows.ApplicationModel.Background;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using MyScreenRecorder.Models;
 using MyScreenRecorder.Services;
 using MyScreenRecorder.Views;
 
@@ -66,10 +64,13 @@ namespace MyScreenRecorder
                     // parameter
                     rootFrame.Navigate(initPageType, e.Arguments);
                 }
+
                 // Ensure the current window is active
                 Window.Current.Activate();
-                
-                AppViewsLauncherService.InitAppView(initPageType, ApplicationView.GetForCurrentView().Id, new Size(500, 300));
+
+                var record = new AppViewRecord(initPageType, ApplicationView.GetForCurrentView(), rootFrame);
+
+                AppViewsLauncherService.InitAppView(record, new Size(500, 300));
             }
         }
 

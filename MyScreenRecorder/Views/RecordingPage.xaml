@@ -11,11 +11,11 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:behaviors="using:MyScreenRecorder.Components.Behaviors"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Width="320" Height="100" ManipulationMode="None"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Width="340" Height="100" ManipulationMode="None"
     IsHoldingEnabled="False">
     
     <interactivity:Interaction.Behaviors>
-        <behaviors:FixedWindowSizeBehavior WindowWidth="320" WindowHeight="100" Title="My Screen Recorder"/>
+        <behaviors:FixedWindowSizeBehavior WindowWidth="340" WindowHeight="100" Title="My Screen Recorder"/>
     </interactivity:Interaction.Behaviors>
 
     <Page.DataContext>
@@ -33,7 +33,7 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="120" />
-            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="120" />
             <ColumnDefinition Width="100" />
         </Grid.ColumnDefinitions>
 
@@ -42,7 +42,7 @@
                 VerticalAlignment="Center"
                 Text="{Binding VideoDuration, 
                 Converter={StaticResource StringFormatConverter}, 
-                ConverterParameter='Time: {0}'}" 
+                ConverterParameter='TimeText'}" 
                 Margin="5"/>
         </controls:DockPanel>
 
@@ -51,13 +51,13 @@
                 VerticalAlignment="Center"
                 Text="{Binding VideoSize, 
                 Converter={StaticResource StringFormatConverter}, 
-                ConverterParameter='Size: {0}'}" 
+                ConverterParameter='SizeText'}" 
                 Margin="5"/>
         </controls:DockPanel>
 
         <controls:DockPanel Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center">
             <Button 
-                Content="Stop" 
+                x:Uid="/RecordingWindow/StopButton" 
                 Command="{Binding  StopRecordingAsyncCommand}" />
         </controls:DockPanel>
     </Grid>

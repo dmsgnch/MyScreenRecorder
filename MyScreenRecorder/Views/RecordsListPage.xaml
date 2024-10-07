@@ -20,7 +20,7 @@
     <Grid>
         <ScrollViewer>
             <StackPanel Spacing="10">
-                <Button Margin="10 0 0 0" Content="Update" Command="{Binding UpdateRecordListCommand}"/>
+                <Button Margin="10 0 0 0" x:Uid="/RecordsListWindow/UpdateButton" Command="{Binding UpdateRecordListCommand}"/>
                 <ListBox ItemsSource="{Binding Records}" HorizontalContentAlignment="Stretch">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">

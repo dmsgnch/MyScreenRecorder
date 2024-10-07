@@ -33,25 +33,30 @@
         </Grid.ColumnDefinitions>
         
         <controls:DockPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center">
-            <RadioButton GroupName="RecordSubject" Content="Full screen"/>
-            <RadioButton GroupName="RecordSubject" Content="Window" IsEnabled="False"/>
-            <RadioButton GroupName="RecordSubject" Content="Area" IsEnabled="False"/>
+            <RadioButton GroupName="RecordSubject" x:Uid="/MainWindow/FullScreenRadButton"/>
+            <RadioButton GroupName="RecordSubject" x:Uid="/MainWindow/WindowRadButton"/>
+            <RadioButton GroupName="RecordSubject" x:Uid="/MainWindow/AreaRadButton"/>
         </controls:DockPanel>
         
         <controls:DockPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center">
-            <CheckBox IsChecked="False" Content="Microphone" IsEnabled="False"/>
-            <CheckBox IsChecked="False" Content="Speaker" IsEnabled="False"/>
+            <CheckBox IsChecked="False" x:Uid="/MainWindow/MicrophoneCheckBox"/>
+            <CheckBox IsChecked="False" x:Uid="/MainWindow/SpeakerCheckBox"/>
         </controls:DockPanel>
         
         <controls:DockPanel Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center">
-            <Button Content="Record" Command="{Binding  StartRecordingCommand}"/>
+            <Button x:Uid="/MainWindow/RecordButton" Command="{Binding  StartRecordingCommand}"/>
         </controls:DockPanel>
         
-        <controls:DockPanel Grid.Row="3" Grid.Column="0" HorizontalAlignment="Center">
+        <controls:DockPanel Grid.Row="3" Grid.Column="0" Margin="20 0 20 0">
             <Button controls:DockPanel.Dock="Left" 
                     Command="{Binding  OpenRecordsWindowAsyncCommand}">
                 <Image Source="/Assets/Folder_icon.png" Width="10" Height="10"/>
             </Button>
+            <ComboBox controls:DockPanel.Dock="Right" SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <interactivity:Interaction.Behaviors>
+                    <behaviors:ComboBoxSelectionBehavior />
+                </interactivity:Interaction.Behaviors>
+            </ComboBox>
         </controls:DockPanel>
     </Grid>
 </Page>

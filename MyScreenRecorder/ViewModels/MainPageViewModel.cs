@@ -1,10 +1,17 @@
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
+using Windows.ApplicationModel.Resources.Core;
 using Windows.Foundation;
+using Windows.Globalization;
 using Windows.Storage;
+using Windows.UI.Xaml.Controls;
 using MyScreenRecorder.Commands;
 using MyScreenRecorder.Services;
 using MyScreenRecorder.Views;
@@ -12,7 +19,7 @@ using Xabe.FFmpeg.Downloader;
 
 namespace MyScreenRecorder.ViewModels;
 
-public class MainPageViewModel
+public class MainPageViewModel : INotifyPropertyChanged
 {
     public RelayCommand StartRecordingCommand { get; }
     public RelayCommandAsync OpenRecordsWindowAsyncCommand { get; }
@@ -32,12 +39,29 @@ public class MainPageViewModel
         }
     }
 
+    private static string? selectedLanguage;
+
+    public string? SelectedLanguage
+    {
+        get => selectedLanguage;
+        set
+        {
+            if (!value?.Equals(selectedLanguage) ?? true)
+            {
+                selectedLanguage = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
     public MainPageViewModel()
     {
         StartRecordingCommand = new RelayCommand((param) => StartRecordingAsync(), IsStartRecordingCanExecute);
         OpenRecordsWindowAsyncCommand = new RelayCommandAsync(async (param) => await OpenRecordsWindowAsync());
 
         ApplicationData.Current.LocalSettings.Values["backgroundTaskName"] = "Recording";
+
+        PropertyChanged += SelectedLanguage_PropertyChanged;
     }
 
     #region Start recording command functionality
@@ -169,5 +193,42 @@ public class MainPageViewModel
         AppWindowsLauncherService.SetWindowTitle(typeof(RecordsListPage), "Records list");
     }
 
+    private void SelectedLanguage_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(SelectedLanguage))
+        {
+            var selectedLanguage = SelectedLanguage;
+
+            var language = ApplicationLanguages.ManifestLanguages
+                .FirstOrDefault(l => new Language(l).DisplayName == selectedLanguage);
+
+            if (language != null)
+            {
+                Frame currentFrame = AppViewsLauncherService.GetCurrentAppViewFrame();
+
+                if (ApplicationLanguages.PrimaryLanguageOverride != language)
+                {
+                     ApplicationLanguages.PrimaryLanguageOverride = language;
+                     CultureInfo culture = new CultureInfo(language);
+                     CultureInfo.DefaultThreadCurrentCulture = culture;
+                     CultureInfo.CurrentCulture = culture;
+                     Thread.CurrentThread.CurrentCulture = culture;
+                     
+                     ResourceContext.GetForCurrentView().Reset();
+                     ResourceContext.GetForViewIndependentUse().Reset();
+
+                    currentFrame.Navigate(currentFrame.Content.GetType());
+                }
+            }
+        }
+    }
+
     #endregion
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    private void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
 }
