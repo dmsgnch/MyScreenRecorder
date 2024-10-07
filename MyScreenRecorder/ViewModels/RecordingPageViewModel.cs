@@ -142,8 +142,9 @@ public class RecordingPageViewModel : INotifyPropertyChanged
             i.Name == (string)ApplicationData.Current.LocalSettings.Values["backgroundTaskName"]);
         if (task != null)
         {
-            Reading = false;
             task.Unregister(true);
+            await Task.Delay(1000);
+            Reading = false;
 
             await AppViewsLauncherService.ToggleToTargetTypeWindowWithSizeAsync(typeof(MainPage));
         }

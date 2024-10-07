@@ -20,9 +20,9 @@ public sealed class RecordingBackgroundTask : IBackgroundTask
         var cost = BackgroundWorkCost.CurrentBackgroundWorkCost;
         if (cost == BackgroundWorkCostValue.High)
             return;
-        
+
         var cancellationTokenSource = new CancellationTokenSource();
-        
+
         taskInstance.Canceled += (s, e) =>
         {
             cancelRequested = true;
@@ -76,8 +76,8 @@ public sealed class RecordingBackgroundTask : IBackgroundTask
 
             var outputTask = Task.Run(async () => { await StandardOutputReading(process); });
             var errorTask = Task.Run(async () => { await ErrorOutputReading(process); });
-
-            await Task.Run(async () =>
+            
+            var waitStopEditingTask = Task.Run(async () =>
             {
                 while (!process.HasExited)
                 {
@@ -89,11 +89,26 @@ public sealed class RecordingBackgroundTask : IBackgroundTask
 
                     await Task.Delay(100);
                 }
-            });
+            });         
 
-            await Task.WhenAll(outputTask, errorTask);
+            await Task.WhenAll(outputTask, errorTask, waitStopEditingTask);
 
             process.WaitForExit();
+        }
+    }
+
+    private async Task WriteStopCommandAsync(Process process)
+    {
+        if (!process.HasExited)
+        {
+            try
+            {
+                await process.StandardInput.WriteLineAsync(StopRecordingFFmpegCommand);
+            }
+            catch (IOException ex)
+            {
+                Debug.WriteLine($"Error writing stop command: {ex.Message}");
+            }
         }
     }
 
@@ -126,10 +141,5 @@ public sealed class RecordingBackgroundTask : IBackgroundTask
                 }
             }
         });
-    }
-
-    private async Task WriteStopCommandAsync(Process process)
-    {
-        await process.StandardInput.WriteLineAsync(StopRecordingFFmpegCommand);
     }
 }
