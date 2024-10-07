@@ -135,4 +135,7 @@
   <data name="RecordButton.Content" xml:space="preserve">
     <value>Record</value>
   </data>
+  <data name="OpenRecordsListWindowToolTip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>View a list of screen recording</value>
+  </data>
 </root>

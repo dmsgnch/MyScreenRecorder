@@ -52,24 +52,28 @@
                                     <Button winUi:FrameworkElementExtensions.AncestorType="ListBox"
                                             Command="{Binding (winUi:FrameworkElementExtensions.Ancestor).DataContext.PlayRecordAsyncCommand, 
                                                             RelativeSource={RelativeSource Self}}"
+                                            x:Uid="/RecordsListWindow/PlayRecordToolTip"
                                             CommandParameter="{Binding FileName}">
                                         <Image Source="/Assets/Play_icon.png" Width="10" Height="15" />
                                     </Button>
                                     <Button winUi:FrameworkElementExtensions.AncestorType="ListBox"
                                             Command="{Binding (winUi:FrameworkElementExtensions.Ancestor).DataContext.OpenRecordFolderAsyncCommand, 
-                                                            RelativeSource={RelativeSource Self}}">
+                                                            RelativeSource={RelativeSource Self}}"
+                                            x:Uid="/RecordsListWindow/OpenFolderToolTip">
                                         <Image Source="/Assets/Folder_icon.png" Width="10" Height="15" />
                                     </Button>
                                     <Button winUi:FrameworkElementExtensions.AncestorType="ListBox"
                                             Command="{Binding (winUi:FrameworkElementExtensions.Ancestor).DataContext.RenameRecordAsyncCommand, 
                                                             RelativeSource={RelativeSource Self}}"
-                                            CommandParameter="{Binding}">
+                                            CommandParameter="{Binding}"
+                                            x:Uid="/RecordsListWindow/RenameRecordToolTip">
                                         <Image Source="/Assets/Edit_icon.png" Width="10" Height="15" />
                                     </Button>
                                     <Button winUi:FrameworkElementExtensions.AncestorType="ListBox"
                                             Command="{Binding (winUi:FrameworkElementExtensions.Ancestor).DataContext.DeleteRecordAsyncCommand, 
                                                             RelativeSource={RelativeSource Self}}"
-                                            CommandParameter="{Binding FileName}">
+                                            CommandParameter="{Binding FileName}"
+                                            x:Uid="/RecordsListWindow/DeleteRecordToolTip">
                                         <Image Source="/Assets/Trash_icon.png" Width="10" Height="15" />
                                     </Button>
                                 </StackPanel>

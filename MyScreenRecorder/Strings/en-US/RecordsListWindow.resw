@@ -120,4 +120,16 @@
   <data name="UpdateButton.Content" xml:space="preserve">
     <value>Update</value>
   </data>
+  <data name="OpenFolderToolTip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Open record folder</value>
+  </data>
+  <data name="RenameRecordToolTip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Rename record</value>
+  </data>
+  <data name="PlayRecordToolTip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Play record</value>
+  </data>
+  <data name="DeleteRecordToolTip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Delete record</value>
+  </data>
 </root>

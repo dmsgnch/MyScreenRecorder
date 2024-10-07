@@ -49,7 +49,8 @@
         
         <controls:DockPanel Grid.Row="3" Grid.Column="0" Margin="20 0 20 0">
             <Button controls:DockPanel.Dock="Left" 
-                    Command="{Binding  OpenRecordsWindowAsyncCommand}">
+                    Command="{Binding  OpenRecordsWindowAsyncCommand}"
+                    x:Uid="/MainWindow/OpenRecordsListWindowToolTip">
                 <Image Source="/Assets/Folder_icon.png" Width="10" Height="10"/>
             </Button>
             <ComboBox controls:DockPanel.Dock="Right" SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}" HorizontalAlignment="Right" VerticalAlignment="Center">

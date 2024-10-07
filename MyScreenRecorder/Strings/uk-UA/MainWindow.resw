@@ -135,4 +135,7 @@
   <data name="RecordButton.Content" xml:space="preserve">
     <value>Запис</value>
   </data>
+  <data name="OpenRecordsListWindowToolTip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Переглянути список записів</value>
+  </data>
 </root>

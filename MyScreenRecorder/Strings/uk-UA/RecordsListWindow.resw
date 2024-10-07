@@ -120,4 +120,16 @@
   <data name="UpdateButton.Content" xml:space="preserve">
     <value>Оновити</value>
   </data>
+  <data name="OpenFolderToolTip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Відкрити папку із записом</value>
+  </data>
+  <data name="RenameRecordToolTip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Перейменувати запис</value>
+  </data>
+  <data name="PlayRecordToolTip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Програти запис</value>
+  </data>
+  <data name="DeleteRecordToolTip.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Видалити запис</value>
+  </data>
 </root>
