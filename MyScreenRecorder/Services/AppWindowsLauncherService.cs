@@ -69,4 +69,12 @@ public static class AppWindowsLauncherService
         var appWindowRecord = AppWindows.FirstOrDefault(aw => aw.WindowType == winType);
         return appWindowRecord?.WindowFrame.XamlRoot;
     }
+
+    public static void ReloadAllOpenWindows()
+    {
+        foreach (var appWindow in AppWindows)
+        {
+            appWindow.WindowFrame.Navigate(appWindow.WindowFrame.Content.GetType());
+        }
+    }
 }

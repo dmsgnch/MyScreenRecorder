@@ -209,15 +209,13 @@ public class MainPageViewModel : INotifyPropertyChanged
                 if (ApplicationLanguages.PrimaryLanguageOverride != language)
                 {
                      ApplicationLanguages.PrimaryLanguageOverride = language;
-                     CultureInfo culture = new CultureInfo(language);
-                     CultureInfo.DefaultThreadCurrentCulture = culture;
-                     CultureInfo.CurrentCulture = culture;
-                     Thread.CurrentThread.CurrentCulture = culture;
                      
                      ResourceContext.GetForCurrentView().Reset();
                      ResourceContext.GetForViewIndependentUse().Reset();
 
                     currentFrame.Navigate(currentFrame.Content.GetType());
+
+                    AppWindowsLauncherService.ReloadAllOpenWindows();
                 }
             }
         }
