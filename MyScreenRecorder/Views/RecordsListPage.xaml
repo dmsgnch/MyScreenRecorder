@@ -72,7 +72,7 @@
                                     <Button winUi:FrameworkElementExtensions.AncestorType="ListBox"
                                             Command="{Binding (winUi:FrameworkElementExtensions.Ancestor).DataContext.DeleteRecordAsyncCommand, 
                                                             RelativeSource={RelativeSource Self}}"
-                                            CommandParameter="{Binding FileName}"
+                                            CommandParameter="{Binding }"
                                             x:Uid="/RecordsListWindow/DeleteRecordToolTip">
                                         <Image Source="/Assets/Trash_icon.png" Width="10" Height="15" />
                                     </Button>

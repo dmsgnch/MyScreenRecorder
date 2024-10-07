@@ -57,7 +57,7 @@ public class RecordsListPageViewModel : INotifyPropertyChanged
         PlayRecordAsyncCommand = new RelayCommandAsync(async (param) => await PlayRecord((string)param));
         OpenRecordFolderAsyncCommand = new RelayCommandAsync(async (param) => await OpenRecordFolder());
         RenameRecordAsyncCommand = new RelayCommandAsync(async (param) => await RenameRecord((Record)param));
-        DeleteRecordAsyncCommand = new RelayCommandAsync(async (param) => await DeleteRecord((string)param));
+        DeleteRecordAsyncCommand = new RelayCommandAsync(async (param) => await DeleteRecord((Record)param));
 
         UpdateRecordListCommand.Execute(null);
     }
@@ -161,13 +161,13 @@ public class RecordsListPageViewModel : INotifyPropertyChanged
         return fileName.EndsWith(".mp4");
     }
 
-    private async Task DeleteRecord(string fileName)
+    private async Task DeleteRecord(Record record)
     {
         ContentDialog renameDialog = new ContentDialog
         {
             XamlRoot = AppWindowsLauncherService.GetXamlRootForWinType(typeof(RecordsListPage)),
             Title = "Confirm Delete",
-            Content = $"Are you sure you want to delete this file \"{fileName}\"?",
+            Content = $"Are you sure you want to delete this file \"{record.FileName}\"?",
             PrimaryButtonText = "OK",
             SecondaryButtonText = "Cancel"
         };
@@ -175,12 +175,11 @@ public class RecordsListPageViewModel : INotifyPropertyChanged
         ContentDialogResult result = await renameDialog.ShowAsync();
         if (result == ContentDialogResult.Primary)
         {
-            var file = await FileAccessService.GetFileFromVideoFolderByNameAsync(fileName);
+            var file = await FileAccessService.GetFileFromVideoFolderByNameAsync(record.FileName);
             file.DeleteAsync();
+            Records.Remove(record);
             
-            await UpdateRecordListCommand.ExecuteAsync(null);
-            
-            NotificationService.ShowToastNotification($"Record {fileName} has been successfully deleted");
+            NotificationService.ShowToastNotification($"Record {record.FileName} has been successfully deleted");
         }
     }
 
