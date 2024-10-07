@@ -134,6 +134,7 @@
     <Compile Include="Services\AppViewsLauncherService.cs" />
     <Compile Include="Services\FileAccessService.cs" />
     <Compile Include="Services\FFmpegProcessLauncher.cs" />
+    <Compile Include="Services\NotificationService.cs" />
     <Compile Include="ViewModels\RecordingPageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\RecordsListPageViewModel.cs" />

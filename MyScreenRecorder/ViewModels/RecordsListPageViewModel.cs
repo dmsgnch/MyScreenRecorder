@@ -177,7 +177,10 @@ public class RecordsListPageViewModel : INotifyPropertyChanged
         {
             var file = await FileAccessService.GetFileFromVideoFolderByNameAsync(fileName);
             file.DeleteAsync();
+            
             await UpdateRecordListCommand.ExecuteAsync(null);
+            
+            NotificationService.ShowToastNotification($"Record {fileName} has been successfully deleted");
         }
     }
 
